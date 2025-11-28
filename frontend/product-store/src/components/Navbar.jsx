@@ -8,9 +8,9 @@ export default function Navbar() {
   const { colorMode, toggleColorMode } = useColorMode();
 
   return (
-    <nav className="w-full bg-green-900 dark:bg-gray-900 shadow-md sticky top-0 z-50">
+    <nav className="w-full dark:bg-zinc-900 shadow-md sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16 bg-green-600">
+        <div className="flex justify-between items-center h-16">
           <Link
             to="/"
             className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent"

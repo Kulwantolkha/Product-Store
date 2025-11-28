@@ -9,9 +9,6 @@ ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <Provider>
       <BrowserRouter>
-        <div className="bg-sky-50">
-          <h1 className="bg-sky-50">Heading</h1>
-        </div>
         <App />
       </BrowserRouter>
     </Provider>
