@@ -1,18 +1,32 @@
-import { useState, useContext } from "react";
+import { useState, useEffect, useContext } from "react";
 import {AppContext} from "../context/AppContext.jsx";
+import {useParams, useNavigate} from "react-router-dom";
 
-export default function Create() {
+export default function EditPage() {
 
-  const {createProduct, loading, error, success, setError, setSuccess} = useContext(AppContext);
-  const [product, setProducts] = useState({
+  const {updateProduct, getProductById, loading, error, success, setError, setSuccess} = useContext(AppContext);
+
+  const [product, setProduct] = useState({
     name: "",
     price: "",
     image: "",
   });
+  const {id} = useParams();
+  const navigate = useNavigate();
+
+  useEffect(()=> {
+    const fetchProduct = async () => {
+        const data = await getProductById(id);
+        if(data) {
+            setProduct(data);
+        }
+    };
+    fetchProduct();
+  }, [id]);
 
   const handleChanges = (e) => {
     const { id, value } = e.target;
-    setProducts((prev) => ({
+    setProduct((prev) => ({
       ...prev,
       [id]: value,
     }));
@@ -23,10 +37,13 @@ export default function Create() {
     setError("");
     setSuccess("");
 
-    const result = await createProduct(product);
+    const result = await updateProduct(id, product);
 
     if(result) {
-      setProducts({name: "", price: "", image: ""});
+      setProduct({name: "", price: "", image: ""});
+      setTimeout(() => {
+        navigate("/");
+      }, 1500);
     }
   };
   
@@ -34,7 +51,7 @@ export default function Create() {
     <div className="min-h-screen bg-white dark:bg-gray-900 pt-20 pb-10 px-4">
       <div className="max-w-md mx-auto bg-white dark:bg-gray-800 rounded-lg shadow-lg p-8">
         <h1 className="text-3xl font-bold text-center mb-8 text-gray-900 dark:text-white">
-          Add New Product
+          Edit Product
         </h1>
         {error && (
           <div className="mb-4 p-4 bg-red-100 dark:bg-red-900 text-red-700 dark:text-red-100 rounded-lg">
@@ -103,7 +120,7 @@ export default function Create() {
           </div>
 
           <button type="submit" disabled={loading} className="w-full bg-blue-500 hover:bg-blue-600 disabled:bg-gray-400 text-white font-bold py-2 px-4 rounded-lg transition duration-200">
-            {loading ? "Adding..." : "Add Products"}
+            {loading ? "Updating..." : "Update Products"}
           </button>
         </form>
       </div>

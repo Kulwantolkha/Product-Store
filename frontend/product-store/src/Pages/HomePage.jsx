@@ -3,7 +3,8 @@ import { AppContext } from "../context/AppContext.jsx";
 import { Link } from "react-router-dom";
 
 export default function HomePage() {
-  const { products, loading, fetchProducts, deleteProduct } = useContext(AppContext);
+  const { products, loading, fetchProducts, deleteProduct } =
+    useContext(AppContext);
 
   useEffect(() => {
     fetchProducts();
@@ -55,12 +56,15 @@ export default function HomePage() {
                       {product.name}
                     </h3>
                     <p className="text-2xl font-bold text-blue-500 mb-4">
-                      ${product.price}
+                      ₹{product.price}
                     </p>
                     <div className="flex gap-2">
-                      <button className="flex-1 bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-3 rounded-lg transition">
+                      <Link
+                        to={`/edit/${product._id}`}
+                        className="flex-1 bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-3 rounded-lg transition text-center"
+                      >
                         Edit
-                      </button>
+                      </Link>
                       <button
                         onClick={() => {
                           if (

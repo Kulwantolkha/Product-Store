@@ -48,6 +48,23 @@ export const createProduct = async (req, res) => {
     }
 };
 
+export const getProductById = async (req,res) => {
+    const {id} = req.params;
+
+    if(!mongoose.Types.ObjectId.isValid(id)) {
+        return res.status(404).json({success:false, message:"Invalid product id"});
+    }
+
+    try {
+        const product = await Product.findById(id);
+        if(!product) {
+            return res.status(404).json({success:false, data: product});
+        }
+    } catch (error) {
+        console.error(`Error while fetching product: ${error.message}`);
+        res.status(500).json({success: false, message: "Server Error"});
+    }
+}
 
 export const deleteProduct = async (req,res) => {
     const {id} = req.params;

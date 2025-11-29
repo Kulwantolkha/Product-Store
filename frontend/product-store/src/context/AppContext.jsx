@@ -140,6 +140,25 @@ export function AppContextProvider({ children }) {
     }
   };
 
+  const getProductById = async (productId) => {
+    try {
+        const response = await fetch(`http://localhost:5000/api/products/${productId}`);
+        const data = await response.json();
+        
+        if(data.success) {
+            return data.data;
+        }
+        else {
+            setError(data.message || "Failed to fetch product's details!");
+            return null;
+        }
+    } catch (error) {
+        setError("Error fetching product: "+error.message);
+        console.error("Error fetching products: ",error);
+        return null;
+    }
+  };
+
   const value = {
     products,
     setProducts,
@@ -152,6 +171,7 @@ export function AppContextProvider({ children }) {
     createProduct,
     deleteProduct,
     updateProduct,
+    getProductById
   };
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;

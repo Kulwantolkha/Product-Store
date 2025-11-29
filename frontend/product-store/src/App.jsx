@@ -2,6 +2,7 @@ import { Route, Routes } from "react-router-dom";
 import Navbar from "./components/Navbar.jsx";
 import Create from "./Pages/Create.jsx";
 import HomePage from "./Pages/HomePage.jsx";
+import EditPage from "./Pages/EditPage";
 import "./App.css";
 
 function App() {
@@ -11,6 +12,7 @@ function App() {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/create" element={<Create />} />
+        <Route path="/edit/:id" element={<EditPage/>} />
       </Routes>
     </div>
   );
